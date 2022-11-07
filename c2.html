@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator Project</title>
+    <style>
+      body {
+        background-color: rgb(127, 249, 255);
+      }
+      .calculator {
+        width: 400px;
+        margin: auto;
+        margin-top: 100px;
+        border-radius: 15px;
+        background-color: white;
+      }
+
+      .title {
+        font-size: 30px;
+        text-align: center;
+        padding-top: 30px;
+        color: rgb(51, 0, 255);
+      }
+
+      label {
+        display: block;
+        margin: 0px 20px;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        font-size: 18px;
+      }
+
+      .user_input {
+        width: 80%;
+        margin: 0px 20px;
+        border: 1px solid cadetblue;
+        border-radius: 5px;
+        padding: 10px 15px;
+      }
+      .btn {
+        width: 89%;
+        margin: 0px 20px;
+        border: none;
+        background-color: rgb(87, 177, 225);
+        padding: 10px 15px;
+        margin-top: 15px;
+        border-radius: 5px;
+        font-size: 15px;
+        margin-bottom: 15px;
+        color: white;
+      }
+      .result {
+        background-color: rgb(0, 141, 180);
+        text-align: end;
+        padding: 10px 10px;
+        margin-top: 20px;
+        color: white;
+        font-size: 20px;
+        margin: 0px 10px;
+      }
+      .error {
+        color: red;
+        margin: 0px 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="calculator">
+      <div class="title">Calculator Project</div>
+      <div class="result" id="result">000</div>
+      <div class="input-group">
+        <label for="">Number One:</label>
+        <input
+          type="number"
+          id="firstnumber"
+          placeholder="Enter first number..."
+          class="user_input"
+        />
+        <small class="error" id="numOneError">Number one is required!</small>
+      </div>
+      <div class="input-group">
+        <label for="">Number Two:</label>
+        <input
+          type="number"
+          id="secondnumber"
+          placeholder="Enter second number..."
+          class="user_input"
+        />
+        <small class="error" id="numTwoError">Number Two is required!</small>
+        <div class="input-group">
+          <label for="operator"> Operator:</label>
+          <select class="user_input" id="operation">
+            <option value="empty">Choose Option</option>
+            <option value="add">+</option>
+            <option value="minus">-</option>
+            <option value="multiply">*</option>
+            <option value="division">/</option>
+          </select>
+          <small class="error" id="operatorError">Operator is required!</small>
+        </div>
+        <div clas="button-group">
+          <button type="button" class="btn" id="btncalculate">Calculate</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    let btn = document.getElementById("btncalculate");
+    let result = document.getElementById("result");
+
+    let numOneError = document.getElementById("numOneError");
+    let numTwoError = document.getElementById("numTwoError");
+    let operatorError = document.getElementById("operatorError");
+
+    let finalresult;
+
+    let numOneStatus,
+      numTwoStatus,
+      operartorStatus = false;
+
+    numOneError.style.display = "none";
+    numTwoError.style.display = "none";
+    operatorError.style.display = "none";
+
+    btn.addEventListener("click", function () {
+      let num1 = document.getElementById("firstnumber");
+      let num2 = document.getElementById("secondnumber");
+      let operator = document.getElementById("operation");
+
+      checkValidation(num1, num2, operator);
+
+      if (
+        numOneStatus == false &&
+        numTwoStatus == false &&
+        operartorStatus == false
+      ) {
+        num1 = parseInt(num1.value);
+        num2 = parseInt(num2.value);
+
+        switch (operator.value) {
+          case "add":
+            finalresult = num1 + num2;
+            break;
+          case "minus":
+            finalresult = num1 - num2;
+            break;
+          case "multiply":
+            finalresult = num1 * num2;
+            break;
+          case "division":
+            finalresult = num1 / num2;
+            break;
+          case "default":
+            console.log("operaton error");
+            break;
+        }
+        result.innerHTML = finalresult;
+      }
+    });
+
+    function checkValidation(num1, num2, operator) {
+      if (num1.value == "" || num1.value == null || num1.value == undefined) {
+        numOneError.style.display = "block";
+        numOneStatus = true;
+      } else {
+        numOneError.style.display = "none";
+        numOneStatus = false;
+      }
+
+      if (num2.value == "" || num2.value == null || num2.value == undefined) {
+        numTwoError.style.display = "block";
+        numTwoStatus = true;
+      } else {
+        numTwoError.style.display = "none";
+        numTwoStatus = false;
+      }
+
+      if (operator.value == "empty") {
+        operatorError.style.display = "block";
+        operartorStatus = true;
+      } else {
+        operatorError.style.display = "none";
+        operartorStatus = false;
+      }
+    }
+  </script>
+</html>
